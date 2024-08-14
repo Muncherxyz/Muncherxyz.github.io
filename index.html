@@ -1,26 +1,89 @@
 <!DOCTYPE html>
+
 <html>
   <head>
+      <meta charset="utf-8">
+      <title>WebAR - WIP</title>
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script>
+    AFRAME.registerComponent('follow-shadow', {
+      schema: {type: 'selector'},
+      init() {this.el.object3D.renderOrder = -1;},
+      tick() {
+        if (this.data) {
+          this.el.object3D.position.copy(this.data.object3D.position);
+          this.el.object3D.position.y-=0.001; // stop z-fighting
+        }
+      }
+    });
+  </script>
   </head>
   <body>
     <a-scene>
-      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-      <a-cylinder
-        position="1 0.75 -3"
-        radius="0.5"
-        height="1.5"
-        color="#FFC65D"
-      ></a-cylinder>
-      <a-plane
-        position="0 0 -4"
-        rotation="-90 0 0"
-        width="4"
-        height="4"
-        color="#7BC8A4"
-      ></a-plane>
-      <a-sky color="#ECECEC"></a-sky>
+        <!-- Asset Manager -->
+        <a-assets>
+            <img id="WebARPersonalPG1" src="Assets/Images/Personal%20Web%20AR%20Page%201.png">
+            <img id="Test" src="Assets/Images/Personal%20Web%20AR%20Page%201.png">
+            <img id="WebARPersonalPG2" src="Assets/Images/Personal%20Web%20AR%20Page%202.png">
+            <img id="WebARPersonalPG3" src="Assets/Images/Personal%20Web%20AR%20Page%203-1.png">
+            
+            <!-- Audio -->
+            <audio id="Lofi" src="Assets/Audio/cold-brew-ra-main-version-29719-02-38.mp3"></audio>
+            
+        </a-assets>
+        
+        <!-- Camera -->
+        <a-entity position="0 0 7">
+            <a-camera>
+                <a-cursor></a-cursor>
+            </a-camera>
+        </a-entity>
+        
+        <a-sound src="#Lofi" autoplay="true"></a-sound>
+        
+        
+        <!-- Curved Image Primitive -->
+        
+        <!-- Right Curved Image -->
+        <a-curvedimage src="#WebARPersonalPG2"
+                       theta-length="50"
+                       theta-start="90"
+                       radius="0.707"
+                       height="0.644"
+                       position="0 1.5 0"
+                       scale="3 3 3">
+        </a-curvedimage>
+        
+        <!-- Center curved image -->        
+        <a-curvedimage src="#Test"
+                       theta-length="50"
+                       theta-start="155"
+                       radius="0.707"
+                       height="0.644"
+                       position="0 1.5 0"
+                       scale="3 3 3">
+        </a-curvedimage>
+        <!-- Left Curved Image -->
+        <a-curvedimage src="#WebARPersonalPG3"
+                       theta-length="50"
+                       theta-start="220"
+                       radius="0.707"
+                       height="0.644"
+                       position="0 1.5 0"
+                       scale="3 3 3">
+            <a-circle scale=".1 .1 .1">
+            </a-circle>
+        </a-curvedimage>
+        
+        <a-box color="#689F38"
+               width="8"
+               height=".2"
+               position="0 1.5 0">
+        </a-box>
+                       
+        
+        
+        
     </a-scene>
   </body>
 </html>
